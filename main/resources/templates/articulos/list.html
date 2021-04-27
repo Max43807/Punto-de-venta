@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title th:text="${titulo}">TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link th:href="@{/css/estilo.css}" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <h1 th:text="${titulo}"></h1>
+        
+        <br>
+        <div th:text="${creado}" th:if="${creado != null}" class="msg-creado"></div>
+        <div th:text="${editado}"th:if="${editado != null}" class="msg-editado"></div>
+        <div th:text="${borrado}"th:if="${borrado != null}" class="msg-borrado"></div>
+        <br>
+        
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Nro</th>
+                    <th>Imagen</th>
+                    <th>Descripción</th>
+                    <th>Cod.Barras</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th sec:authorize="hasRole('ROLE_ADMIN')">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="a : ${articulos}">
+                    <td th:text="${a.id}"></td>
+                    <td >
+                        <img alt="Imagen no encontrada" th:src="${a.linkImagen}" width="120px" />
+                    </td>
+                    <td th:text="${a.descripcion}"></td>
+                    <td th:text="${a.codBarras}"></td>
+                    <td th:text="${a.cantidad}"></td>
+                    <td th:text="${a.precio}"></td>
+                    <td sec:authorize="hasRole('ROLE_ADMIN')"> 
+                        <a th:href="@{/articulos/editar/} + ${a.id}">Editar</a>
+                        <a th:href="@{/articulos/borrar/} + ${a.id}">Borrar</a>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <a th:href="@{/articulos/nuevo}" sec:authorize="hasRole('ROLE_ADMIN')"> Nuevo </a>
+        &nbsp;
+        <a th:href="@{/home}">Volver</a>
+    </body>
+</html>

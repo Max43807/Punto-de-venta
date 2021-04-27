@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title th:text="${titulo}">TODO supply a title</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+    
+	<small sec:authorize="isAuthenticated()">
+    Usuario: <span sec:authentication="name"></span>
+    Permiso: <span sec:authentication="principal.authorities"></span>
+    </small>
+    
+    <br>
+        <h1 th:text="${titulo}"></h1>
+        <a th:href="@{/articulos/listado}">Ver Articulos </a>
+        <form id="logoutForm" th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
+        	<a href="#" onclick="document.getElementById('logoutForm').submit();">Cerrar Sesión</a>
+        </form>
+    	
+        
+    </body>
+</html>
